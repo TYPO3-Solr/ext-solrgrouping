@@ -1,0 +1,9 @@
+2012-08-29  Ingo Renner  <ingo@typo3.org>
+
+	* Fixed bug: groupingActive did not take into account the grouping=off GET parameter
+
+2012-08-27  Ingo Renner  <ingo@typo3.org>
+
+	* Fixed bug #40045: ###RESULTS.FOUND### shows wrong count
+	* Added feature #40050: Magic field __solr_grouping_groupingActive
+	
