@@ -30,9 +30,9 @@ $EM_CONF[$_EXTKEY] = array(
 	'lockType' => '',
 	'constraints' => array(
 		'depends' => array(
-			'solr' => '2.8.0',
+			'solr' => '3.1.0',
 			'php' => '5.3.0-0.0.0',
-			'typo3' => '4.5.5-0.0.0',
+			'typo3' => '6.2.0-0.0.0',
 		),
 		'conflicts' => array(
 		),
