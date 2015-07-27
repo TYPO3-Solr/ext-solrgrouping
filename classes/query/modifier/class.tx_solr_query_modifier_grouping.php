@@ -85,10 +85,9 @@ class tx_solr_query_modifier_Grouping implements tx_solr_QueryModifier {
 				$query->addGroupQuery($groupConfiguration['query']);
 			}
 
-            // Added Group Sorting / Daniel Hirth <hirth@stimme.net> 18.06.2014 //
-            if (isset($groupConfiguration['sortBy'])){
-                $query->addGroupSorting($groupConfiguration['sortBy']);
-            }
+			if (isset($groupConfiguration['sortBy'])){
+				$query->addGroupSorting($groupConfiguration['sortBy']);
+			}
 		}
 
 		return $query;
