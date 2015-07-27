@@ -1,8 +1,9 @@
 <?php
+namespace ApacheSolrForTypo3\Solrgrouping\Query\Modifier;
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2012 Ingo Renner <ingo@typo3.org>
+*  (c) 2012-2015 Ingo Renner <ingo@typo3.org>
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -30,7 +31,7 @@
  * @package TYPO3
  * @subpackage solr
  */
-class tx_solr_query_modifier_Grouping implements tx_solr_QueryModifier {
+class Grouping implements \Tx_Solr_QueryModifier {
 
 	/**
 	 * Solr configuration
@@ -40,7 +41,7 @@ class tx_solr_query_modifier_Grouping implements tx_solr_QueryModifier {
 	protected $configuration;
 
 	/**
-	 * Grouping realted configuration
+	 * Grouping related configuration
 	 *
 	 * plugin.tx.solr.search.grouping
 	 *
@@ -56,7 +57,7 @@ class tx_solr_query_modifier_Grouping implements tx_solr_QueryModifier {
 	 *
 	 */
 	public function __construct() {
-		$this->configuration = tx_solr_Util::getSolrConfiguration();
+		$this->configuration = \Tx_Solr_Util::getSolrConfiguration();
 		$this->groupingConfiguration = $this->configuration['search.']['grouping.'];
 	}
 
@@ -64,10 +65,10 @@ class tx_solr_query_modifier_Grouping implements tx_solr_QueryModifier {
 	 * Modifies the given query and adds the parameters necessary
 	 * for result grouping.
 	 *
-	 * @param tx_solr_Query The query to modify
-	 * @return tx_solr_Query The modified query with grouping parameters
+	 * @param \Tx_Solr_Query $query The query to modify
+	 * @return \Tx_Solr_Query The modified query with grouping parameters
 	 */
-	public function modifyQuery(tx_solr_Query $query) {
+	public function modifyQuery(\Tx_Solr_Query $query) {
 		$query->setGrouping();
 
 		$query->setNumberOfResultsPerGroup($this->findHighestGroupResultsLimit());
@@ -124,9 +125,3 @@ class tx_solr_query_modifier_Grouping implements tx_solr_QueryModifier {
 
 }
 
-
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/solr/classes/query/modifier/class.tx_solr_query_modifier_grouping.php'])	{
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/solr/classes/query/modifier/class.tx_solr_query_modifier_grouping.php']);
-}
-
-?>
