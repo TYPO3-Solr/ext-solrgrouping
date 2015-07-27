@@ -7,7 +7,9 @@ if (!defined ('TYPO3_MODE')) {
    # ----- # ----- # ----- # ----- # ----- # ----- # ----- # ----- # ----- #
 
 	// TypoScript
-t3lib_extMgm::addStaticFile($_EXTKEY, 'static/solrgrouping/', 'Apache Solr - Result Grouping');
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile(
+	$_EXTKEY,
+	'static/solrgrouping/',
+	'Apache Solr - Result Grouping'
+);
 
-
-?>

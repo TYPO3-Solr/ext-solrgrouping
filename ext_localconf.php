@@ -6,13 +6,11 @@ if (!defined ('TYPO3_MODE')) {
    # ----- # ----- # ----- # ----- # ----- # ----- # ----- # ----- # ----- #
 
 	// trigger loading of ext_autoload.php
-tx_solrgrouping_ClassLoader::loadClasses();
+//\ApacheSolrForTypo3\Solrgrouping\ClassLoader::loadClasses();
 
-tx_solr_search_SearchComponentManager::registerSearchComponent(
+\Tx_Solr_Search_SearchComponentManager::registerSearchComponent(
 	'grouping',
-	'tx_solr_search_GroupingComponent'
+	'ApacheSolrForTypo3\Solrgrouping\Search\GroupingComponent'
 );
 
-$GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['solr']['pi_results']['results']['postProcessCommandVariables'][] = 'tx_solr_search_GroupingComponent';
-
-?>
+$GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['solr']['pi_results']['results']['postProcessCommandVariables'][] = 'ApacheSolrForTypo3\Solrgrouping\Search\GroupingComponent';

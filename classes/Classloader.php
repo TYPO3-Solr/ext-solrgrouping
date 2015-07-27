@@ -1,4 +1,5 @@
 <?php
+namespace ApacheSolrForTypo3\Solrgrouping;
 /***************************************************************
  *  Copyright notice
  *
@@ -36,7 +37,7 @@
  * @package TYPO3
  * @subpackage solrgrouping
  */
-final class tx_solrgrouping_ClassLoader {
+final class ClassLoader {
 
 	/**
 	 * Dummy method to trigger loading of the ext_autoload.php file.
@@ -45,5 +46,3 @@ final class tx_solrgrouping_ClassLoader {
 	public static function loadClasses() {}
 
 }
-
-?>

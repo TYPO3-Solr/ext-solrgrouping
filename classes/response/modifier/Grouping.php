@@ -1,8 +1,9 @@
 <?php
+namespace ApacheSolrForTypo3\Solrgrouping\Response\Modifier;
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2012 Ingo Renner <ingo@typo3.org>
+*  (c) 2012-2015 Ingo Renner <ingo@typo3.org>
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -30,12 +31,12 @@
  * @package TYPO3
  * @subpackage solr
  */
-class tx_solr_response_modifier_Grouping implements tx_solr_ResponseModifier, tx_solr_SearchAware {
+class Grouping implements \Tx_Solr_ResponseModifier, \Tx_Solr_SearchAware {
 
 	/**
 	 * Search instance that provided the response.
 	 *
-	 * @var tx_solr_Search
+	 * @var \Tx_Solr_Search
 	 */
 	protected $search;
 
@@ -43,19 +44,19 @@ class tx_solr_response_modifier_Grouping implements tx_solr_ResponseModifier, tx
 	/**
 	 * Sets the search instance that provided the response.
 	 *
-	 * @param tx_solr_Search Currently active search instance
+	 * @param \Tx_Solr_Search Currently active search instance
 	 */
-	public function setSearch(tx_solr_Search $search) {
+	public function setSearch(\Tx_Solr_Search $search) {
 		$this->search = $search;
 	}
 
 	/**
 	 * Modifies the given response and returns the modified response as result.
 	 *
-	 * @param Apache_Solr_Response The response to modify
-	 * @return Apache_Solr_Response The modified response
+	 * @param \Apache_Solr_Response $response The response to modify
+	 * @return \Apache_Solr_Response The modified response
 	 */
-	public function modifyResponse(Apache_Solr_Response $response) {
+	public function modifyResponse(\Apache_Solr_Response $response) {
 		$documents = $this->getFlattenedDocumentsList($response);
 		$response  = $this->injectDocumentsIntoResponse($response, $documents);
 
@@ -65,18 +66,18 @@ class tx_solr_response_modifier_Grouping implements tx_solr_ResponseModifier, tx
 	/**
 	 * Injects the flattened documents list back into the response.
 	 *
-	 * @param Apache_Solr_Response $response Response as given by Solr
+	 * @param \Apache_Solr_Response $response Response as given by Solr
 	 * @param array $documents List of documents to inject as results
-	 * @return Apache_Solr_Response Response object with result documents
+	 * @return \Apache_Solr_Response Response object with result documents
 	 */
-	protected function injectDocumentsIntoResponse(Apache_Solr_Response $response, array $documents) {
-		$reflectionClass = new ReflectionClass('Apache_Solr_Response');
+	protected function injectDocumentsIntoResponse(\Apache_Solr_Response $response, array $documents) {
+		$reflectionClass = new \ReflectionClass('Apache_Solr_Response');
 		$parsedDataProperty = $reflectionClass->getProperty('_parsedData');
 		$parsedDataProperty->setAccessible(TRUE);
 
 		$parsedData = $parsedDataProperty->getValue($response);
 
-		$responseSection = new stdClass();
+		$responseSection = new \stdClass();
 		$responseSection->numFound = $this->getSumNumberOfDocumentsFound($documents);
 		$responseSection->docs     = $documents;
 		$responseSection->maxScore = $this->getDocumentMaximumScore($documents);
@@ -94,9 +95,10 @@ class tx_solr_response_modifier_Grouping implements tx_solr_ResponseModifier, tx
 	 * Extracts the documents from the group structure and converts it to a
 	 * flat list.
 	 *
-	 * @param Apache_Solr_Response $response Solr response
+	 * @param \Apache_Solr_Response $response Solr response
+	 * @return \Apache_Solr_Document[]
 	 */
-	protected function getFlattenedDocumentsList(Apache_Solr_Response $response) {
+	protected function getFlattenedDocumentsList(\Apache_Solr_Response $response) {
 		$flatDocumentsList = array();
 
 		foreach ($response->grouped as $groupCollectionKey => $groupCollection) {
@@ -124,8 +126,8 @@ class tx_solr_response_modifier_Grouping implements tx_solr_ResponseModifier, tx
 	 * TODO add function based group support with Apache Solr 4.0
 	 *
 	 * @param string $groupCollectionKey Name / value of the group in the Solr response
-	 * @param stdClass $groupCollection Group collection, multiple groups for a field's values
-	 * @return array An array of Apache_Solr_Document objects
+	 * @param \stdClass $groupCollection Group collection, multiple groups for a field's values
+	 * @return \Apache_Solr_Document[] An array of Apache_Solr_Document objects
 	 */
 	protected function getGroupCollectionDocuments($groupCollectionKey, $groupCollection) {
 		$groupCollectionDocuments = array();
@@ -169,8 +171,8 @@ class tx_solr_response_modifier_Grouping implements tx_solr_ResponseModifier, tx
 	 *
 	 * Also adds fields to the documents, with data from the group.
 	 *
-	 * @param stdClass $group A single group
-	 * @return array An array of Apache_Solr_Document objects
+	 * @param \stdClass $group A single group
+	 * @return \Apache_Solr_Document[] An array of Apache_Solr_Document objects
 	 */
 	protected function getFieldGroupDocuments($group) {
 		$groupDocuments         = array();
@@ -194,8 +196,8 @@ class tx_solr_response_modifier_Grouping implements tx_solr_ResponseModifier, tx
 	 *
 	 * Also adds fields to the documents, with data from the group.
 	 *
-	 * @param stdClass $group A query group
-	 * @return array An array of Apache_Solr_Document objects
+	 * @param \stdClass $group A query group
+	 * @return \Apache_Solr_Document[] An array of Apache_Solr_Document objects
 	 */
 	protected function getQueryGroupDocuments($group) {
 		$groupDocuments         = array();
@@ -257,13 +259,13 @@ class tx_solr_response_modifier_Grouping implements tx_solr_ResponseModifier, tx
 	 *
 	 * For compatibility reasons taken from Apache_Solr_Response->_parseData()
 	 *
-	 * @param stdClass $rawDocument The raw document as initially returned by SolrPhpClient
-	 * @return Apache_Solr_Document Apache Solr Document
+	 * @param \stdClass $rawDocument The raw document as initially returned by SolrPhpClient
+	 * @return \Apache_Solr_Document Apache Solr Document
 	 */
-	private function createApacheSolrDocument(stdClass $rawDocument) {
+	private function createApacheSolrDocument(\stdClass $rawDocument) {
 		$collapseSingleValueArrays = $this->search->getSolrConnection()->getCollapseSingleValueArrays();
 
-		$document = new Apache_Solr_Document();
+		$document = new \Apache_Solr_Document();
 		foreach ($rawDocument as $key => $value) {
 				// If a result is an array with only a single value
 				// then its nice to be able to access it
@@ -309,7 +311,7 @@ class tx_solr_response_modifier_Grouping implements tx_solr_ResponseModifier, tx
 	protected function findGroupConfigurationNameByGroupCollectionKey($groupCollectionKey) {
 		$groupConfigurationName = FALSE;
 
-		$solrConfiguration     = tx_solr_Util::getSolrConfiguration();
+		$solrConfiguration     = \Tx_Solr_Util::getSolrConfiguration();
 		$groupingConfiguration = $solrConfiguration['search.']['grouping.'];
 		$configuredGroups      = $groupingConfiguration['groups.'];
 
@@ -343,7 +345,7 @@ class tx_solr_response_modifier_Grouping implements tx_solr_ResponseModifier, tx
 	protected function getGroupConfigurationByName($groupConfigurationName) {
 		$groupConfiguration = NULL;
 
-		$solrConfiguration     = tx_solr_Util::getSolrConfiguration();
+		$solrConfiguration     = \Tx_Solr_Util::getSolrConfiguration();
 		$groupingConfiguration = $solrConfiguration['search.']['grouping.']['groups.'];
 
 		if (isset($groupingConfiguration[$groupConfigurationName . '.'])) {
@@ -366,7 +368,7 @@ class tx_solr_response_modifier_Grouping implements tx_solr_ResponseModifier, tx
 	 * @return array Array of documents reduced to the configured size.
 	 */
 	protected function limitNumberOfGroupResults(array $documents, array $groupConfiguration) {
-		$solrConfiguration = tx_solr_Util::getSolrConfiguration();
+		$solrConfiguration = \Tx_Solr_Util::getSolrConfiguration();
 		$defaultLimit      = $solrConfiguration['search.']['grouping.']['numberOfResultsPerGroup'];
 
 		$limit = $defaultLimit;
@@ -417,9 +419,3 @@ class tx_solr_response_modifier_Grouping implements tx_solr_ResponseModifier, tx
 
 }
 
-
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/solr/classes/response/modifier/class.tx_solr_response_modifier_grouping.php'])	{
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/solr/classes/response/modifier/class.tx_solr_response_modifier_grouping.php']);
-}
-
-?>
