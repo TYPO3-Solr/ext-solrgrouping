@@ -1,5 +1,6 @@
 <?php
 namespace ApacheSolrForTypo3\Solrgrouping\Query\Modifier;
+
 /***************************************************************
 *  Copyright notice
 *
@@ -22,6 +23,9 @@ namespace ApacheSolrForTypo3\Solrgrouping\Query\Modifier;
 *
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
+
+use ApacheSolrForTypo3\Solr\Query;
+use ApacheSolrForTypo3\Solr\Util;
 
 
 /**
@@ -57,7 +61,7 @@ class Grouping implements \Tx_Solr_QueryModifier {
 	 *
 	 */
 	public function __construct() {
-		$this->configuration = \Tx_Solr_Util::getSolrConfiguration();
+		$this->configuration = Util::getSolrConfiguration();
 		$this->groupingConfiguration = $this->configuration['search.']['grouping.'];
 	}
 
@@ -65,10 +69,10 @@ class Grouping implements \Tx_Solr_QueryModifier {
 	 * Modifies the given query and adds the parameters necessary
 	 * for result grouping.
 	 *
-	 * @param \Tx_Solr_Query $query The query to modify
-	 * @return \Tx_Solr_Query The modified query with grouping parameters
+	 * @param Query $query The query to modify
+	 * @return Query The modified query with grouping parameters
 	 */
-	public function modifyQuery(\Tx_Solr_Query $query) {
+	public function modifyQuery(Query $query) {
 		$query->setGrouping();
 
 		$query->setNumberOfResultsPerGroup($this->findHighestGroupResultsLimit());

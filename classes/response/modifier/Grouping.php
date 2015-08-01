@@ -1,5 +1,6 @@
 <?php
 namespace ApacheSolrForTypo3\Solrgrouping\Response\Modifier;
+
 /***************************************************************
 *  Copyright notice
 *
@@ -23,6 +24,9 @@ namespace ApacheSolrForTypo3\Solrgrouping\Response\Modifier;
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
+use ApacheSolrForTypo3\Solr\Search;
+use ApacheSolrForTypo3\Solr\Util;
+
 
 /**
  * Writes statistics after searches have been conducted.
@@ -36,7 +40,7 @@ class Grouping implements \Tx_Solr_ResponseModifier, \Tx_Solr_SearchAware {
 	/**
 	 * Search instance that provided the response.
 	 *
-	 * @var \Tx_Solr_Search
+	 * @var Search
 	 */
 	protected $search;
 
@@ -44,9 +48,9 @@ class Grouping implements \Tx_Solr_ResponseModifier, \Tx_Solr_SearchAware {
 	/**
 	 * Sets the search instance that provided the response.
 	 *
-	 * @param \Tx_Solr_Search Currently active search instance
+	 * @param Search $search Currently active search instance
 	 */
-	public function setSearch(\Tx_Solr_Search $search) {
+	public function setSearch(Search $search) {
 		$this->search = $search;
 	}
 
@@ -311,7 +315,7 @@ class Grouping implements \Tx_Solr_ResponseModifier, \Tx_Solr_SearchAware {
 	protected function findGroupConfigurationNameByGroupCollectionKey($groupCollectionKey) {
 		$groupConfigurationName = FALSE;
 
-		$solrConfiguration     = \Tx_Solr_Util::getSolrConfiguration();
+		$solrConfiguration     = Util::getSolrConfiguration();
 		$groupingConfiguration = $solrConfiguration['search.']['grouping.'];
 		$configuredGroups      = $groupingConfiguration['groups.'];
 
@@ -345,7 +349,7 @@ class Grouping implements \Tx_Solr_ResponseModifier, \Tx_Solr_SearchAware {
 	protected function getGroupConfigurationByName($groupConfigurationName) {
 		$groupConfiguration = NULL;
 
-		$solrConfiguration     = \Tx_Solr_Util::getSolrConfiguration();
+		$solrConfiguration     = Util::getSolrConfiguration();
 		$groupingConfiguration = $solrConfiguration['search.']['grouping.']['groups.'];
 
 		if (isset($groupingConfiguration[$groupConfigurationName . '.'])) {
@@ -368,7 +372,7 @@ class Grouping implements \Tx_Solr_ResponseModifier, \Tx_Solr_SearchAware {
 	 * @return array Array of documents reduced to the configured size.
 	 */
 	protected function limitNumberOfGroupResults(array $documents, array $groupConfiguration) {
-		$solrConfiguration = \Tx_Solr_Util::getSolrConfiguration();
+		$solrConfiguration = Util::getSolrConfiguration();
 		$defaultLimit      = $solrConfiguration['search.']['grouping.']['numberOfResultsPerGroup'];
 
 		$limit = $defaultLimit;
