@@ -1,0 +1,12 @@
+{
+	"name": "dkd/ext-solrgrouping",
+	"type": "typo3-cms-extension",
+	"description": "Apache Solr for TYPO3 - Result Grouping",
+	"homepage": "https://github.com/TYPO3-Solr/ext-solrgrouping",
+	"license": ["GPL-2.0"],
+	"keywords": ["TYPO3 CMS", "solr"],
+	"support": {
+		"issues": "https://github.com/TYPO3-Solr/ext-solrgrouping/issues"
+	},
+	"version": "1.1.0-dev"
+}
