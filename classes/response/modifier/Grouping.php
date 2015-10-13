@@ -25,6 +25,8 @@ namespace ApacheSolrForTypo3\Solrgrouping\Response\Modifier;
 ***************************************************************/
 
 use ApacheSolrForTypo3\Solr\Search;
+use ApacheSolrForTypo3\Solr\Search\ResponseModifier;
+use ApacheSolrForTypo3\Solr\Search\SearchAware;
 use ApacheSolrForTypo3\Solr\Util;
 
 
@@ -35,7 +37,7 @@ use ApacheSolrForTypo3\Solr\Util;
  * @package TYPO3
  * @subpackage solr
  */
-class Grouping implements \Tx_Solr_ResponseModifier, \Tx_Solr_SearchAware {
+class Grouping implements ResponseModifier, SearchAware {
 
 	/**
 	 * Search instance that provided the response.

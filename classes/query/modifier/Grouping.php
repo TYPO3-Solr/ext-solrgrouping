@@ -25,6 +25,7 @@ namespace ApacheSolrForTypo3\Solrgrouping\Query\Modifier;
 ***************************************************************/
 
 use ApacheSolrForTypo3\Solr\Query;
+use ApacheSolrForTypo3\Solr\Query\Modifier\Modifier;
 use ApacheSolrForTypo3\Solr\Util;
 
 
@@ -35,7 +36,7 @@ use ApacheSolrForTypo3\Solr\Util;
  * @package TYPO3
  * @subpackage solr
  */
-class Grouping implements \Tx_Solr_QueryModifier {
+class Grouping implements Modifier {
 
 	/**
 	 * Solr configuration

@@ -3,7 +3,7 @@ if (!defined ('TYPO3_MODE')) {
 	die ('Access denied.');
 }
 
-\Tx_Solr_Search_SearchComponentManager::registerSearchComponent(
+\ApacheSolrForTypo3\Solr\Search\SearchComponentManager::registerSearchComponent(
 	'grouping',
 	'ApacheSolrForTypo3\Solrgrouping\Search\GroupingComponent'
 );

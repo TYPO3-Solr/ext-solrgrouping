@@ -24,7 +24,11 @@ namespace ApacheSolrForTypo3\Solrgrouping\Search;
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
+use ApacheSolrForTypo3\Solr\Plugin\CommandPostProcessor;
+use ApacheSolrForTypo3\Solr\Plugin\PluginAware;
 use ApacheSolrForTypo3\Solr\Query;
+use ApacheSolrForTypo3\Solr\Search\AbstractComponent;
+use ApacheSolrForTypo3\Solr\Search\QueryAware;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Frontend\Plugin\AbstractPlugin;
 
@@ -37,8 +41,9 @@ use TYPO3\CMS\Frontend\Plugin\AbstractPlugin;
  * @subpackage solr
  */
 class GroupingComponent
-	extends \Tx_Solr_search_AbstractComponent
-	implements \Tx_Solr_QueryAware, \Tx_Solr_PluginAware, \Tx_Solr_CommandPostProcessor {
+
+	extends AbstractComponent
+	implements QueryAware, PluginAware, CommandPostProcessor {
 
 	/**
 	 * Solr query
@@ -50,7 +55,7 @@ class GroupingComponent
 	/**
 	 * Parent plugin
 	 *
-	 * @var \Tx_Solr_PiResults_Results
+	 * @var \ApacheSolrForTypo3\Solr\Plugin\Results\Results
 	 */
 	protected $parentPlugin;
 
