@@ -1,12 +1,61 @@
 {
-	"name": "dkd/ext-solrgrouping",
+	"name": "apache-solr-for-typo3/solr",
 	"type": "typo3-cms-extension",
 	"description": "Apache Solr for TYPO3 - Result Grouping",
-	"homepage": "https://github.com/TYPO3-Solr/ext-solrgrouping",
-	"license": ["GPL-2.0"],
-	"keywords": ["TYPO3 CMS", "solr"],
+	"version": "1.1.0-dev",
+	"minimum-stability": "alpha",
+	"license": "GPL-2.0",
+	"keywords": ["typo3", "TYPO3 CMS", "solr", "search"],
+	"homepage": "http://www.typo3-solr.com",
+	"authors": [
+		{
+			"name": "Ingo Renner",
+			"email": "ingo@typo3.org"
+		},
+		{
+			"name": "Timo Schmidt",
+			"email": "ingo@typo3.org"
+		}
+	],
 	"support": {
 		"issues": "https://github.com/TYPO3-Solr/ext-solrgrouping/issues"
 	},
-	"version": "1.1.0-dev"
+	"require": {
+		"php": ">=5.3.7 <6.0",
+		"typo3/cms-core": ">=6.2.14,<8.0"
+	},
+	"require-dev": {
+		"phpunit/phpunit": "~4.8.0"
+	},
+	"autoload": {
+		"classmap": [
+			"Resources/Private/Php/"
+		],
+		"psr-4": {
+			"ApacheSolrForTypo3\\Solrgrouping\\": "Classes/"
+		}
+	},
+	"config": {
+		"optimize-autoloader": true,
+		"vendor-dir": ".Build/vendor",
+		"bin-dir": ".Build/bin"
+	},
+	"scripts": {
+		"post-autoload-dump": [
+			"mkdir -p .Build/Web/typo3conf/ext/",
+			"[ -L .Build/Web/typo3conf/ext/solrgrouping ] || ln -snvf ../../../../. .Build/Web/typo3conf/ext/solrgrouping"
+		]
+	},
+	"extra": {
+		"branch-alias": {
+			"dev-master": "1.1.x-dev"
+		},
+		"class-alias-maps": [
+			"Migrations/Code/ClassAliasMap.php"
+		],
+		"typo3/cms": {
+			"cms-package-dir": "{$vendor-dir}/typo3/cms",
+			"web-dir": ".Build/Web"
+		}
+	}
 }
