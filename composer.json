@@ -1,5 +1,5 @@
 {
-	"name": "apache-solr-for-typo3/solr",
+	"name": "apache-solr-for-typo3/solrgrouping",
 	"type": "typo3-cms-extension",
 	"description": "Apache Solr for TYPO3 - Result Grouping",
 	"version": "1.1.0-dev",
@@ -28,9 +28,6 @@
 		"phpunit/phpunit": "~4.8.0"
 	},
 	"autoload": {
-		"classmap": [
-			"Resources/Private/Php/"
-		],
 		"psr-4": {
 			"ApacheSolrForTypo3\\Solrgrouping\\": "Classes/"
 		}
@@ -50,9 +47,6 @@
 		"branch-alias": {
 			"dev-master": "1.1.x-dev"
 		},
-		"class-alias-maps": [
-			"Migrations/Code/ClassAliasMap.php"
-		],
 		"typo3/cms": {
 			"cms-package-dir": "{$vendor-dir}/typo3/cms",
 			"web-dir": ".Build/Web"
