@@ -27,6 +27,10 @@
 	"require-dev": {
 		"phpunit/phpunit": "~4.8.0"
 	},
+	"replace": {
+		"solrgrouping": "self.version",
+		"typo3-ter/solrgrouping": "self.version"
+	},
 	"autoload": {
 		"psr-4": {
 			"ApacheSolrForTypo3\\Solrgrouping\\": "Classes/"
