@@ -2,32 +2,31 @@
 namespace ApacheSolrForTypo3\Solrgrouping\Query\Modifier;
 
 /***************************************************************
-*  Copyright notice
-*
-*  (c) 2012-2015 Ingo Renner <ingo@typo3.org>
-*  All rights reserved
-*
-*  This script is part of the TYPO3 project. The TYPO3 project is
-*  free software; you can redistribute it and/or modify
-*  it under the terms of the GNU General Public License as published by
-*  the Free Software Foundation; either version 2 of the License, or
-*  (at your option) any later version.
-*
-*  The GNU General Public License can be found at
-*  http://www.gnu.org/copyleft/gpl.html.
-*
-*  This script is distributed in the hope that it will be useful,
-*  but WITHOUT ANY WARRANTY; without even the implied warranty of
-*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-*  GNU General Public License for more details.
-*
-*  This copyright notice MUST APPEAR in all copies of the script!
-***************************************************************/
+ *  Copyright notice
+ *
+ *  (c) 2012-2015 Ingo Renner <ingo@typo3.org>
+ *  All rights reserved
+ *
+ *  This script is part of the TYPO3 project. The TYPO3 project is
+ *  free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  The GNU General Public License can be found at
+ *  http://www.gnu.org/copyleft/gpl.html.
+ *
+ *  This script is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  This copyright notice MUST APPEAR in all copies of the script!
+ ***************************************************************/
 
 use ApacheSolrForTypo3\Solr\Query;
 use ApacheSolrForTypo3\Solr\Query\Modifier\Modifier;
 use ApacheSolrForTypo3\Solr\Util;
-
 
 /**
  * Modifies a query to add grouping parameters
@@ -36,97 +35,99 @@ use ApacheSolrForTypo3\Solr\Util;
  * @package TYPO3
  * @subpackage solr
  */
-class Grouping implements Modifier {
+class Grouping implements Modifier
+{
 
-	/**
-	 * Solr configuration
-	 *
-	 * @var array
-	 */
-	protected $configuration;
+    /**
+     * Solr configuration
+     *
+     * @var array
+     */
+    protected $configuration;
 
-	/**
-	 * Grouping related configuration
-	 *
-	 * plugin.tx.solr.search.grouping
-	 *
-	 * @var array
-	 */
-	protected $groupingConfiguration;
+    /**
+     * Grouping related configuration
+     *
+     * plugin.tx.solr.search.grouping
+     *
+     * @var array
+     */
+    protected $groupingConfiguration;
 
-	protected $groupingParameters = array();
+    protected $groupingParameters = array();
 
 
-	/**
-	 * Constructor
-	 *
-	 */
-	public function __construct() {
-		$this->configuration = Util::getSolrConfiguration();
-		$this->groupingConfiguration = $this->configuration['search.']['grouping.'];
-	}
+    /**
+     * Constructor
+     *
+     */
+    public function __construct()
+    {
+        $this->configuration = Util::getSolrConfiguration();
+        $this->groupingConfiguration = $this->configuration['search.']['grouping.'];
+    }
 
-	/**
-	 * Modifies the given query and adds the parameters necessary
-	 * for result grouping.
-	 *
-	 * @param Query $query The query to modify
-	 * @return Query The modified query with grouping parameters
-	 */
-	public function modifyQuery(Query $query) {
-		$query->setGrouping();
+    /**
+     * Modifies the given query and adds the parameters necessary
+     * for result grouping.
+     *
+     * @param Query $query The query to modify
+     * @return Query The modified query with grouping parameters
+     */
+    public function modifyQuery(Query $query)
+    {
+        $query->setGrouping();
 
-		$query->setNumberOfResultsPerGroup($this->findHighestGroupResultsLimit());
+        $query->setNumberOfResultsPerGroup($this->findHighestGroupResultsLimit());
 
-		if (!empty($this->groupingConfiguration['numberOfGroups'])) {
-			$query->setNumberOfGroups($this->groupingConfiguration['numberOfGroups']);
-		}
+        if (!empty($this->groupingConfiguration['numberOfGroups'])) {
+            $query->setNumberOfGroups($this->groupingConfiguration['numberOfGroups']);
+        }
 
-		$configuredGroups = $this->groupingConfiguration['groups.'];
-		foreach ($configuredGroups as $groupName => $groupConfiguration) {
+        $configuredGroups = $this->groupingConfiguration['groups.'];
+        foreach ($configuredGroups as $groupName => $groupConfiguration) {
+            if (isset($groupConfiguration['field'])) {
+                $query->addGroupField($groupConfiguration['field']);
+            } elseif (isset($groupConfiguration['query'])) {
+                $query->addGroupQuery($groupConfiguration['query']);
+            }
 
-			if (isset($groupConfiguration['field'])) {
-				$query->addGroupField($groupConfiguration['field']);
-			} elseif (isset($groupConfiguration['query'])) {
-				$query->addGroupQuery($groupConfiguration['query']);
-			}
+            if (isset($groupConfiguration['sortBy'])) {
+                $query->addGroupSorting($groupConfiguration['sortBy']);
+            }
+        }
 
-			if (isset($groupConfiguration['sortBy'])){
-				$query->addGroupSorting($groupConfiguration['sortBy']);
-			}
-		}
+        return $query;
+    }
 
-		return $query;
-	}
+    /**
+     * Finds the highest number of results per group.
+     *
+     * Checks the global setting, as well as each group configuration's
+     * individual results limit.
+     *
+     * The lowest limit returned will be 1, as this is the default for Solr's
+     * group.limit parameter. See http://wiki.apache.org/solr/FieldCollapsing
+     *
+     * @return integer Highest number of results per group configured.
+     */
+    protected function findHighestGroupResultsLimit()
+    {
+        $highestLimit = 1;
 
-	/**
-	 * Finds the highest number of results per group.
-	 *
-	 * Checks the global setting, as well as each group configuration's
-	 * individual results limit.
-	 *
-	 * The lowest limit returned will be 1, as this is the default for Solr's
-	 * group.limit parameter. See http://wiki.apache.org/solr/FieldCollapsing
-	 *
-	 * @return integer Highest number of results per group configured.
-	 */
-	protected function findHighestGroupResultsLimit() {
-		$highestLimit = 1;
+        if (!empty($this->groupingConfiguration['numberOfResultsPerGroup'])) {
+            $highestLimit = $this->groupingConfiguration['numberOfResultsPerGroup'];
+        }
 
-		if (!empty($this->groupingConfiguration['numberOfResultsPerGroup'])) {
-			$highestLimit = $this->groupingConfiguration['numberOfResultsPerGroup'];
-		}
+        $configuredGroups = $this->groupingConfiguration['groups.'];
+        foreach ($configuredGroups as $groupName => $groupConfiguration) {
+            if (!empty($groupConfiguration['numberOfResultsPerGroup'])
+                && $groupConfiguration['numberOfResultsPerGroup'] > $highestLimit
+            ) {
+                $highestLimit = $groupConfiguration['numberOfResultsPerGroup'];
+            }
+        }
 
-		$configuredGroups = $this->groupingConfiguration['groups.'];
-		foreach ($configuredGroups as $groupName => $groupConfiguration) {
-			if (!empty($groupConfiguration['numberOfResultsPerGroup'])
-			&& $groupConfiguration['numberOfResultsPerGroup'] > $highestLimit) {
-				$highestLimit = $groupConfiguration['numberOfResultsPerGroup'];
-			}
-		}
-
-		return $highestLimit;
-	}
-
+        return $highestLimit;
+    }
 }
-
