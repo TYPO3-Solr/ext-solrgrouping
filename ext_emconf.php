@@ -33,7 +33,7 @@ $EM_CONF[$_EXTKEY] = array(
         'depends' => array(
             'solr' => '3.1.0-',
             'php' => '5.3.0-0.0.0',
-            'typo3' => '6.2.0-7.6.99',
+            'typo3' => '6.2.0-7.99.99',
         ),
         'conflicts' => array(),
         'suggests' => array(),
