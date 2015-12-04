@@ -1,8 +1,8 @@
 # Result Grouping
 
-Solrgrouping is a TYPO3 extension that can be used as an addon for the extension "solr".
+EXT:solrgrouping is a TYPO3 extension that can be used as an addon for the extension "solr" providing Solr result grouping.
 
-Solrgrouping allows grouping of documents sharing a common field. For each group the most relevant documents are returned.
+Result grouping allows grouping of documents sharing a common field. For each group the most relevant documents are returned.
 
 An example is a search in an online store for a common term such as DVD, showing the top 3 results for each category ("TVs & Video", "Movies", "Computers", etc).
 
