@@ -14,7 +14,7 @@ $EM_CONF[$_EXTKEY] = array(
 
     'title' => 'Apache Solr for TYPO3 - Result Grouping',
     'description' => 'Result Grouping',
-    'version' => '1.2.x',
+    'version' => '1.1.0-dev',
     'category' => 'plugin',
     'author' => 'Ingo Renner',
     'author_email' => 'ingo@typo3.org',

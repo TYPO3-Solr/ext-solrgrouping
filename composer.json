@@ -2,7 +2,6 @@
 	"name": "apache-solr-for-typo3/solrgrouping",
 	"type": "typo3-cms-extension",
 	"description": "Apache Solr for TYPO3 - Result Grouping",
-	"version": "1.2.x",
 	"minimum-stability": "alpha",
 	"license": "GPL-2.0",
 	"keywords": ["typo3", "TYPO3 CMS", "solr", "search"],
