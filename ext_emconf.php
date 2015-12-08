@@ -1,17 +1,5 @@
 <?php
-
-########################################################################
-# Extension Manager/Repository config file for ext "solrgrouping".
-#
-# Auto generated 20-07-2012 19:50
-#
-# Manual updates:
-# Only the data in the array - everything else is removed by next
-# writing. "version" and "dependencies" must not be touched!
-########################################################################
-
 $EM_CONF[$_EXTKEY] = array(
-
     'title' => 'Apache Solr for TYPO3 - Result Grouping',
     'description' => 'Result Grouping',
     'version' => '1.1.0-dev',
