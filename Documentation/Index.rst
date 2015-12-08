@@ -61,9 +61,18 @@ Apache Solr for TYPO3 - Result Grouping
 What does it do?
 ================
 
-The result grouping addon for the TYPO3 solr extension can be used to split the result set from Solr into groups.
+The result grouping add-on for the TYPO3 solr extension can be used to split the
+result set from Solr into groups.
 
-An example could be, that you index pages, products, and news and want show the results grouped by the type.
+An example could be, that you index pages, products, and news and want show the
+results grouped by the type.
+
+.. important::
+
+   Due to technical limitations, when using grouping the page browser and results
+   per page switch are disabled. So you usually want to use grouping for a first
+   overview page of result groups. (The technical issue is that Solr is using the
+   same parameter to define how many groups to return as it uses for pagination)
 
 
 Before you start
@@ -77,5 +86,7 @@ Make sure your solr extension is configured to index everything you need
 * Solr sites are initialized through "Initialize Solr connections"
 * Solr checks in the reports module are green
 
-If you run into any issues with setting up the base EXT:solr extension, please consult the `documentation <https://forge.typo3.org/projects/extension-solr/wiki>`_.
-Also please don't hesitate to ask for help on the `EXT:solr Slack channel <https://typo3.slack.com/messages/ext-solr/>`_
+If you run into any issues with setting up the base EXT:solr extension, please
+consult the `documentation <https://forge.typo3.org/projects/extension-solr/wiki>`_.
+Also please don't hesitate to ask for help on the
+`TYPO3 Solr Slack channel <https://typo3.slack.com/messages/ext-solr/>`_
