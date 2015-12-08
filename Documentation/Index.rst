@@ -67,7 +67,7 @@ result set from Solr into groups.
 An example could be, that you index pages, products, and news and want show the
 results grouped by the type.
 
-.. important::
+.. note::
 
    Due to technical limitations, when using grouping the page browser and results
    per page switch are disabled. So you usually want to use grouping for a first
