@@ -56,6 +56,7 @@ Apache Solr for TYPO3 - Result Grouping
 	:titlesonly:
 	:glob:
 
+	Templating/Index
 
 What does it do?
 ================
