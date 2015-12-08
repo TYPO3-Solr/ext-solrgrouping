@@ -124,7 +124,18 @@ Defines a query to creates a single group of results that match this query.
 
 grouping.groups.[groupingName].numberOfResultsPerGroup
 ------------------------------------------------------
+
 :Type: Integer
 :Since: 1.0
 
 Overwrites the global setting in ``plugin.tx_solr.search.grouping.numberOfResultsPerGroup``.
+
+grouping.groups.[groupingName].sortBy
+-------------------------------------
+
+:Type: String
+:Since: 1.0
+
+Defines a sort field and sort direction for a group. The sort field is followed
+by a space and the sort order which is either ``asc`` or ``desc``.
+For example: ``someSortField asc``.
