@@ -58,6 +58,7 @@ Apache Solr for TYPO3 - Result Grouping
 
 	Templating/Index
 	Configuration/Examples/FieldGroups
+	Configuration/Examples/QueryGroups
 
 
 What does it do?
