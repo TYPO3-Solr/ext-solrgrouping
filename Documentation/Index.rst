@@ -56,6 +56,7 @@ Apache Solr for TYPO3 - Result Grouping
 	:titlesonly:
 	:glob:
 
+	Configuration/Reference
 	Templating/Index
 	Configuration/Examples/FieldGroups
 	Configuration/Examples/QueryGroups
