@@ -57,6 +57,8 @@ Apache Solr for TYPO3 - Result Grouping
 	:glob:
 
 	Templating/Index
+	Configuration/Examples/FieldGroups
+
 
 What does it do?
 ================
