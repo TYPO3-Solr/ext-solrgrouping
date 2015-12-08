@@ -1,7 +1,7 @@
 <?php
 $EM_CONF[$_EXTKEY] = array(
     'title' => 'Apache Solr for TYPO3 - Result Grouping',
-    'description' => 'Result Grouping',
+    'description' => 'Solr Result Grouping allows grouping of documents sharing a common field. For each group the most relevant documents are returned.',
     'version' => '1.1.0-dev',
     'category' => 'plugin',
     'author' => 'Ingo Renner',
