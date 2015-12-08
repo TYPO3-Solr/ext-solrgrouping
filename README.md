@@ -14,6 +14,3 @@ We would like to thank our [Sponsors](http://www.typo3-solr.com/en/sponsors/our-
 Here we will further continue the development as a community project.
 Commercial Support can be purchased from [dkd Internet Service GmbH](http://www.dkd.de).
 
-# Documentation
-
-You can read our [documentation with examples](Documentation/Index.md) online.
