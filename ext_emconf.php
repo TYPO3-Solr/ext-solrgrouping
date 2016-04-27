@@ -15,8 +15,8 @@ $EM_CONF[$_EXTKEY] = array(
     'clearCacheOnLoad' => 0,
     'constraints' => array(
         'depends' => array(
-            'solr' => '3.1.0-',
-            'typo3' => '6.2.0-7.99.99',
+            'solr' => '4.0.2-',
+            'typo3' => '7.6.0-8.0.99',
         ),
         'conflicts' => array(),
         'suggests' => array(),
