@@ -330,7 +330,7 @@ class Grouping implements ResponseModifier, SearchAware
         $groupConfigurationName = false;
 
         $solrConfiguration = Util::getSolrConfiguration();
-        $groupingConfiguration = $solrConfiguration['search.']['grouping.'];
+        $groupingConfiguration = $solrConfiguration->getObjectByPath('plugin.tx_solr.search.grouping.');
         $configuredGroups = $groupingConfiguration['groups.'];
 
         foreach ($configuredGroups as $groupName => $groupConfiguration) {
@@ -367,7 +367,7 @@ class Grouping implements ResponseModifier, SearchAware
         $groupConfiguration = null;
 
         $solrConfiguration = Util::getSolrConfiguration();
-        $groupingConfiguration = $solrConfiguration['search.']['grouping.']['groups.'];
+        $groupingConfiguration = $solrConfiguration->getObjectByPath('plugin.tx_solr.search.grouping.groups.');
 
         if (isset($groupingConfiguration[$groupConfigurationName . '.'])) {
             $groupConfiguration = $groupingConfiguration[$groupConfigurationName . '.'];
@@ -391,7 +391,8 @@ class Grouping implements ResponseModifier, SearchAware
     protected function limitNumberOfGroupResults(array $documents, array $groupConfiguration)
     {
         $solrConfiguration = Util::getSolrConfiguration();
-        $defaultLimit = $solrConfiguration['search.']['grouping.']['numberOfResultsPerGroup'];
+        $config = $solrConfiguration->getObjectByPath('plugin.tx_solr.search.grouping.');
+        $defaultLimit = $config['numberOfResultsPerGroup'];
 
         $limit = $defaultLimit;
         if (isset($groupConfiguration['numberOfResultsPerGroup'])) {

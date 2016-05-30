@@ -64,7 +64,7 @@ class Grouping implements Modifier
     public function __construct()
     {
         $this->configuration = Util::getSolrConfiguration();
-        $this->groupingConfiguration = $this->configuration['search.']['grouping.'];
+        $this->groupingConfiguration = $this->configuration->getObjectByPath('plugin.tx_solr.search.grouping.');
     }
 
     /**
