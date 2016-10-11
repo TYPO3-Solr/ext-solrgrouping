@@ -80,8 +80,13 @@ class GroupingComponent extends AbstractComponent implements QueryAware, PluginA
             // turn off pagination and results per page switch as grouping
             // uses the start and rows parameters, too and thus pagination
             // not working as expected
-            $this->parentPlugin->conf['search.']['results.']['pagebrowser.']['enabled'] = 0;
-            unset($this->parentPlugin->conf['search.']['results.']['resultsPerPageSwitchOptions']);
+            $overwriteConfiguration = array();
+            $overwriteConfiguration['search.']['results.']['pagebrowser.']['enabled'] = 0;
+            $overwriteConfiguration['search.']['results.']['resultsPerPageSwitchOptions'] = '__UNSET';
+
+            /** @var $configurationManager \ApacheSolrForTypo3\Solr\System\Configuration\ConfigurationManager */
+            $configurationManager = GeneralUtility::makeInstance('ApacheSolrForTypo3\Solr\System\Configuration\ConfigurationManager');
+            $configurationManager->getTypoScriptConfiguration()->mergeSolrConfiguration($overwriteConfiguration);
         }
     }
 
